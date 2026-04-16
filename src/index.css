@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-amiri: "Amiri", serif;
+  --color-primary: var(--primary-color, #f97316);
+  --color-primary-light: var(--primary-color-light, rgba(249, 115, 22, 0.2));
+}
+
+@layer base {
+  body {
+    @apply antialiased text-zinc-900 bg-zinc-50 transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply text-zinc-100 bg-zinc-950;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl transition-all;
+  }
+
+  .dark .glass-card {
+    @apply bg-zinc-900/80 border-zinc-800/50;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-white font-bold rounded-2xl hover:brightness-110 shadow-lg shadow-primary-light transition-all active:scale-95;
+  }
+
+  .dark .btn-primary {
+    @apply shadow-primary-light;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-zinc-200 rounded-2xl focus:ring-2 focus:ring-primary-light focus:border-primary outline-none transition-all;
+  }
+
+  .dark .input-field {
+    @apply bg-zinc-900 border-zinc-800 text-zinc-100;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Safe Area Utilities */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pl-safe {
+    padding-left: env(safe-area-inset-left);
+  }
+  .pr-safe {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .mt-safe {
+    margin-top: env(safe-area-inset-top);
+  }
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Mobile Touch Improvements */
+  @media (max-width: 768px) {
+    .btn-primary, 
+    button, 
+    .input-field,
+    select {
+      min-height: 44px;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    textarea,
+    select {
+      font-size: 16px !important; /* Prevent iOS zoom on focus */
+    }
+  }
+
+  .receipt-paper {
+    background: #ffffff;
+    background-image: 
+      linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px),
+      linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px);
+    background-size: 20px 20px;
+    position: relative;
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(0,0,0,0.05);
+  }
+
+  .receipt-torn-edge {
+    position: relative;
+    background: white;
+  }
+
+  .receipt-torn-edge::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-size: 20px 10px;
+    background-repeat: repeat-x;
+  }
+
+  .receipt-torn-edge-top::before {
+    top: -10px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, white 13px);
+  }
+
+  .receipt-torn-edge-bottom::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 10px;
+    background-size: 20px 10px;
+    background-repeat: repeat-x;
+    background-image: radial-gradient(circle at 10px 15px, transparent 12px, white 13px);
+  }
+
+  .receipt-striped {
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.015) 50%, 
+      transparent 50%
+    );
+    background-size: 100% 48px;
+  }
+
+  .scanner-active, 
+  .scanner-active body,
+  .scanner-active html {
+    background-color: transparent !important;
+    --tw-bg-opacity: 0 !important;
+    background: transparent !important;
+  }
+
+  .scanner-active #root {
+    visibility: hidden;
+    background: transparent !important;
+  }
+
+  /* Ensure the scanner UI itself remains visible */
+  .scanner-active [class*="fixed"] {
+    visibility: visible !important;
+  }
+}
+
+@keyframes scan-line {
+  0% { top: 1rem; }
+  100% { top: calc(100% - 1rem); }
+}
+
+.animate-scan-line {
+  animation: scan-line 2s linear infinite;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-300 dark:bg-zinc-700 rounded-full transition-colors;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-400 dark:bg-zinc-600;
+}
+
+@media print {
+  @page {
+    margin: 0.5cm;
+    size: auto;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide everything */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Show only the receipt content */
+  #receipt-content,
+  #receipt-content * {
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  #receipt-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    z-index: 9999 !important;
+  }
+
+  /* Ensure text colors are forced */
+  .text-zinc-900 { color: #18181b !important; }
+  .text-zinc-500 { color: #71717a !important; }
+  .text-zinc-400 { color: #a1a1aa !important; }
+  .text-primary { color: var(--primary-color, #f97316) !important; }
+  .bg-primary { background-color: var(--primary-color, #f97316) !important; -webkit-print-color-adjust: exact !important; }
+  .text-white { color: white !important; }
+  .text-green-600 { color: #16a34a !important; }
+  .text-red-500 { color: #ef4444 !important; }
+
+  /* Hide UI elements specifically */
+  .print\:hidden,
+  button,
+  .lucide,
+  [role="button"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+

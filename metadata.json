@@ -1,0 +1,9 @@
+{
+  "name": "YusraPOS",
+  "description": "A comprehensive Point of Sale system with inventory management, sales tracking, real-time sync, Zakat calculation, and loyalty programs.",
+  "requestFramePermissions": [
+    "camera",
+    "publickey-credentials-get",
+    "publickey-credentials-create"
+  ]
+}
